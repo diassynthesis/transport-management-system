@@ -4,7 +4,7 @@
 
 import logging
 import urllib as my_urllib
-
+import requests
 import simplejson as json
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
@@ -47,7 +47,17 @@ class TmsPlace(models.Model):
             else:
                 raise ValidationError(
                     _("You need to set a Place and a State Name"))
-            google_url = 'http://maps.googleapis.com/maps/api/geocode/json?address=%s&sensor=false' % address.encode('utf-8')  # noqa
+            key = self.env['ir.config_parameter'].get_param('base_geolocalize.google_map_api_key')
+            if key == 'key':
+                raise ValidationError(_(
+                    "You need to define base_geolocalize.google_map_api_key parameter."))
+#            params = {
+#                'key': key,
+#                'data_type': 'json',
+#                'location': address.encode('utf-8'),
+#                'thumbMaps': 'false',
+#            }
+            google_url = 'http://maps.googleapis.com/maps/api/geocode/json?address=address.encode('utf-8')&key=key  # noqa
             try:
                 # TODO deprecated-urllib-function
                 result = json.load(my_urllib.urlopen(google_url))
