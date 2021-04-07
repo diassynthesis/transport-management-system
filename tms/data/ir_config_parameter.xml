@@ -9,7 +9,7 @@
             <field name="value">5</field>
         </record>
         <record id="base_geolocalize.google_map_api_key" model="ir.config_parameter">
-            <field name="key">mapquest.key</field>
+            <field name="key">base_geolocalize.google_map_api_key</field>
             <field name="value">key</field>
         </record>
 </odoo>
